@@ -4,6 +4,33 @@ class GameBoard {
     this.coordinates = new Map();
     this.ships = [];
   }
+  showGameBoard() {
+    let line = "";
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        let coordValue = this.coordinates.get(this.fromArrayToCoords([i, j]));
+        if (coordValue === undefined) {
+          line += "-";
+        }
+        if (coordValue === "attacked-already") {
+          line += "X";
+        }
+        if (coordValue === "missed-attack") {
+          line += "*";
+        }
+        if (
+          (coordValue !== undefined) &
+          (coordValue !== "attacked-already") &
+          (coordValue !== "missed-attack")
+        ) {
+          line += "O";
+        }
+      }
+      line += "\n";
+    }
+    console.log(line);
+    console.log("+++++++++++++++++++");
+  }
   receiveAttack(arrayCoords) {
     let coords = this.fromArrayToCoords([arrayCoords[0], arrayCoords[1]]);
     if (
@@ -84,6 +111,14 @@ class GameBoard {
       } else {
         return false;
       }
+    } else {
+      return false;
+    }
+  }
+  thisCoordinateHasBeenAttack(arrayCoords) {
+    let coords = this.fromArrayToCoords([arrayCoords[0], arrayCoords[1]]);
+    if (this.coordinates.get(coords) === "attacked-already") {
+      return true;
     } else {
       return false;
     }

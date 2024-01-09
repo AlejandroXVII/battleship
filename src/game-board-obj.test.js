@@ -21,7 +21,7 @@ test("Check if is allow to place a ship outside the game board", () => {
   gameBoard.placeShip(ship, [18, 2], false);
   gameBoard.placeShip(ship, [0, 18], true);
   gameBoard.placeShip(ship, [0, 18], false);
-  expect(gameBoard.ships.length).toBe(2);
+  expect(gameBoard.ships.length).toBe(1);
 });
 
 test("Check if receiveAttack hit ships and register missed hits ", () => {
