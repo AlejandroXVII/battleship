@@ -6,7 +6,7 @@ class GameBoard {
     this.coordinates = new Map();
   }
   placeShip(ship, arrayCoords) {
-    if (true /*this.isPlaceAvailable(ship.length, coords)*/) {
+    if (this.isPlaceAvailable(ship.length, arrayCoords)) {
       for (let index = 0; index < ship.length; index++) {
         let coords = this.fromArrayToCoords([
           arrayCoords[0],
@@ -18,16 +18,19 @@ class GameBoard {
   }
   isPlaceAvailable(shipSize, arrayCoords) {
     let placeIsAvailable = true;
-    let coords = this.fromArrayToCoords(arrayCoords);
     for (let index = 0; index < shipSize; index++) {
-      if (this.coordinates.has([coords[0], coords[1] + index])) {
+      let coords = this.fromArrayToCoords([
+        arrayCoords[0],
+        arrayCoords[1] + index,
+      ]);
+      if (this.coordinates.has(coords)) {
         placeIsAvailable = false;
       }
     }
     return placeIsAvailable;
   }
   fromArrayToCoords(coords) {
-    return { x: coords[0], y: coords[1] };
+    return "x:" + coords[0] + ",y:" + coords[1];
   }
 }
 
