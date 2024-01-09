@@ -68,8 +68,36 @@ class GameBoard {
     }
     return placeIsAvailable;
   }
+  isPlaceAvailableForAttack(arrayCoords) {
+    if (
+      (arrayCoords[0] >= 0) &
+      (arrayCoords[0] < this.size) &
+      (arrayCoords[1] >= 0) &
+      (arrayCoords[1] < this.size)
+    ) {
+      let coords = this.fromArrayToCoords([arrayCoords[0], arrayCoords[1]]);
+      if (
+        (this.coordinates.get(coords) !== "missed-attack") &
+        (this.coordinates.get(coords) !== "attacked-already")
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
   fromArrayToCoords(coords) {
     return "x:" + coords[0] + ",y:" + coords[1];
+  }
+  isAllShipsSunk() {
+    for (let index = 0; index < this.ships.length; index++) {
+      if (!this.ships[index].isSunk()) {
+        return false;
+      }
+    }
+    return true;
   }
 }
 

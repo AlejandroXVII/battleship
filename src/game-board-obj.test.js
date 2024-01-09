@@ -48,3 +48,34 @@ test("Check if receiveAttack hit ships and register missed hits ", () => {
   );
   expect(gameBoard.ships[0].isSunk()).toBe(true);
 });
+
+test("Check if isAllTheShipsSunk method works", () => {
+  const ship1 = new Ship(3);
+  const ship2 = new Ship(3);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(ship1, [2, 2], true);
+  gameBoard.placeShip(ship2, [3, 2], true);
+  expect(gameBoard.isAllShipsSunk()).toBe(false);
+  gameBoard.receiveAttack([2, 2]);
+  gameBoard.receiveAttack([2, 3]);
+  gameBoard.receiveAttack([2, 4]);
+  expect(gameBoard.isAllShipsSunk()).toBe(false);
+  gameBoard.receiveAttack([3, 2]);
+  gameBoard.receiveAttack([3, 3]);
+  gameBoard.receiveAttack([3, 4]);
+  expect(gameBoard.isAllShipsSunk()).toBe(true);
+});
+
+test("Check if isPlaceAvailableForAttack method works", () => {
+  const ship1 = new Ship(3);
+  const ship2 = new Ship(3);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(ship1, [2, 2], true);
+  gameBoard.placeShip(ship2, [3, 2], true);
+  gameBoard.receiveAttack([3, 2]);
+  gameBoard.receiveAttack([5, 5]);
+  expect(gameBoard.isPlaceAvailableForAttack([2, 2])).toBe(true);
+  expect(gameBoard.isPlaceAvailableForAttack([6, 6])).toBe(true);
+  expect(gameBoard.isPlaceAvailableForAttack([3, 2])).toBe(false);
+  expect(gameBoard.isPlaceAvailableForAttack([5, 5])).toBe(false);
+});
