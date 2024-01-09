@@ -1,5 +1,5 @@
 class GameBoard {
-  constructor(size = 20) {
+  constructor(size = 10) {
     this.size = size;
     this.coordinates = new Map();
     this.ships = [];
