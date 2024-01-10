@@ -63,21 +63,21 @@ test("Verify check method", () => {
   player.enemyGameBoard.receiveAttack([8, 5]);
   expect(player.checkBestAttack([6, 5])).toStrictEqual([[4, 5]]);
 });
-test.skip("Emulate a fake battle between computer players", () => {
+test("Emulate a fake battle between computer players", () => {
   const player1 = new Player();
   const player2 = new Player();
   player1.autoPlaceAllShips();
   player2.autoPlaceAllShips();
   player1.addEnemyGameBoard(player2.gameBoard);
   player2.addEnemyGameBoard(player1.gameBoard);
+  let numBattles = 0;
   while (
     !player1.enemyGameBoard.isAllShipsSunk() &
     !player2.enemyGameBoard.isAllShipsSunk()
   ) {
     player1.autoAttack();
     player2.autoAttack();
+    numBattles += 1;
   }
-  console.table(player1.enemyGameBoard.coordinates);
-  console.table(player2.enemyGameBoard.coordinates);
-  expect(player2.enemyGameBoard.isAllShipsSunk()).toBeBoolean();
+  expect(numBattles).toBeLessThan(50);
 });

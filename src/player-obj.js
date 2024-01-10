@@ -26,23 +26,33 @@ class Player {
     this.enemyGameBoard = enemyGameBoard;
   }
   autoPlaceAllShips() {
+    let numRepetition = 0; //to prevent infinite loops if there is no place available
     for (let index = 0; index < this.ships.length; index++) {
       let arrayCoords = [];
       let orientation = false;
       do {
         arrayCoords = [
-          getRandomInt(0, this.gameBoard.size - 2 - index),
-          getRandomInt(0, this.gameBoard.size - 2 - index),
+          getRandomInt(0, this.gameBoard.size - 1 - index),
+          getRandomInt(0, this.gameBoard.size - 1 - index),
         ];
         orientation = randomBoolean();
+        numRepetition += 1;
       } while (
         !this.gameBoard.isPlaceAvailableForPlacing(
           this.ships[index].length,
           arrayCoords,
           orientation,
-        )
+        ) &
+        (numRepetition < 300)
       );
+      if (numRepetition >= 300) {
+        this.gameBoard.coordinates.clear();
+        break;
+      }
       this.gameBoard.placeShip(this.ships[index], arrayCoords, orientation);
+    }
+    if (numRepetition >= 300) {
+      this.autoPlaceAllShips();
     }
   }
   getRandomAttackCoordinate() {
@@ -257,7 +267,6 @@ class Player {
         [arrayCoords[0] + 1, arrayCoords[1]],
       ];
     }
-    console.log(nextBestAttack);
     return nextBestAttack;
   }
   autoAttack() {

@@ -1,5 +1,9 @@
 class GameBoard {
-  constructor(size = 10) {
+  constructor(size = 20) {
+    if (size < 6) {
+      //6 IS THE MINIUM SIZE ALLOW OR AUTO PLACE SHIP FUNCTION ENTER IN A INFINITE LOOP
+      size = 10;
+    }
     this.size = size;
     this.coordinates = new Map();
     this.ships = [];
@@ -33,18 +37,22 @@ class GameBoard {
       line += "\n";
     }
     console.log(line);
-    console.log("+++++++++++++++++++");
+    console.log("\n");
   }
   receiveAttack(arrayCoords) {
     let coords = this.fromArrayToCoords([arrayCoords[0], arrayCoords[1]]);
     if (
       this.coordinates.has(coords) &
       (this.coordinates.get(coords) !== "attacked-already") &
-      (this.coordinates.get(coords) !== "missed-attack")
+      (this.coordinates.get(coords) !== "missed-attack") &
+      (this.coordinates.get(coords) !== "ship-area")
     ) {
       this.coordinates.get(coords).hit();
       this.coordinates.set(coords, "attacked-already");
-    } else if (this.coordinates.has(coords) === false) {
+    } else if (
+      (this.coordinates.has(coords) === false) |
+      (this.coordinates.get(coords) === "ship-area")
+    ) {
       this.coordinates.set(coords, "missed-attack");
     }
   }
@@ -67,6 +75,11 @@ class GameBoard {
         }
         this.coordinates.set(coords, ship);
       }
+      this.placeShipArea(
+        ship.length,
+        [arrayCoords[0], arrayCoords[1]],
+        defaultPosition,
+      );
       this.ships.push(ship);
     }
   }
@@ -82,12 +95,10 @@ class GameBoard {
     }
     for (let i = startCoord[0]; i < endCoord[0]; i++) {
       for (let j = startCoord[1]; j < endCoord[1]; j++) {
-        //if (defaultPosition) {
         let coords = this.fromArrayToCoords([i, j]);
         if (!this.coordinates.has(coords)) {
           this.coordinates.set(coords, "ship-area");
         }
-        //}
       }
     }
   }
