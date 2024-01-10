@@ -7,7 +7,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
 function randomBoolean() {
-  return true; /*Math.random() < 0.5;*/
+  return Math.random() < 0.5;
 }
 
 class Player {
@@ -245,11 +245,11 @@ class Player {
         [arrayCoords[0] + 1, arrayCoords[1]],
       ];
     }
+    console.log(nextBestAttack);
     return nextBestAttack;
   }
   autoAttack() {
     let arrayCoords = [];
-    let randomHit = false;
     do {
       if (this.futuresAttacks.length > 0) {
         arrayCoords = this.futuresAttacks.shift();
@@ -258,50 +258,11 @@ class Player {
           getRandomInt(0, this.enemyGameBoard.size),
           getRandomInt(0, this.enemyGameBoard.size),
         ];
-        randomHit = true;
-        this.lastHit.push(arrayCoords);
       }
     } while (!this.enemyGameBoard.isPlaceAvailableForAttack(arrayCoords));
     this.enemyGameBoard.receiveAttack(arrayCoords);
     if (this.enemyGameBoard.thisCoordinateHasBeenAttack(arrayCoords)) {
-      if (randomHit) {
-        this.futuresAttacks = [];
-        this.futuresAttacks.push([arrayCoords[0] + 1, arrayCoords[1]]);
-        this.futuresAttacks.push([arrayCoords[0] - 1, arrayCoords[1]]);
-        this.futuresAttacks.push([arrayCoords[0], arrayCoords[1] + 1]);
-        this.futuresAttacks.push([arrayCoords[0], arrayCoords[1] - 1]);
-      } else if (this.lastHit.length < 6) {
-        this.lastHit.push(arrayCoords);
-        if (this.lastHit[this.lastHit.length - 1][0] === this.lastHit[0][0]) {
-          this.futuresAttacks = [];
-          for (let index = 0; index < this.lastHit.length; index++) {
-            this.futuresAttacks.push([
-              arrayCoords[0],
-              this.lastHit[index][1] + 1,
-            ]);
-            this.futuresAttacks.push([
-              arrayCoords[0],
-              this.lastHit[index][1] - 1,
-            ]);
-          }
-        }
-        if (this.lastHit[this.lastHit.length - 1][1] === this.lastHit[0][1]) {
-          this.futuresAttacks = [];
-          for (let index = 0; index < this.lastHit.length; index++) {
-            this.futuresAttacks.push([
-              this.lastHit[index][0] + 1,
-              arrayCoords[1],
-            ]);
-            this.futuresAttacks.push([
-              this.lastHit[index][0] - 1,
-              arrayCoords[1],
-            ]);
-          }
-        } else {
-          this.lastHit.length = 0;
-          this.futuresAttacks.length = 0;
-        }
-      }
+      this.futuresAttacks = this.checkBestAttack(arrayCoords);
     }
   }
 }
