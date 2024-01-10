@@ -18,10 +18,14 @@ class GameBoard {
         if (coordValue === "missed-attack") {
           line += "*";
         }
+        if (coordValue === "ship-area") {
+          line += "/";
+        }
         if (
           (coordValue !== undefined) &
           (coordValue !== "attacked-already") &
-          (coordValue !== "missed-attack")
+          (coordValue !== "missed-attack") &
+          (coordValue !== "ship-area")
         ) {
           line += "O";
         }
@@ -64,6 +68,27 @@ class GameBoard {
         this.coordinates.set(coords, ship);
       }
       this.ships.push(ship);
+    }
+  }
+  placeShipArea(shipSize, arrayCoords, defaultPosition) {
+    let startCoord = [];
+    let endCoord = [];
+
+    startCoord = [arrayCoords[0] - 1, arrayCoords[1] - 1];
+    if (defaultPosition) {
+      endCoord = [arrayCoords[0] + 2, arrayCoords[1] + shipSize + 1];
+    } else {
+      endCoord = [arrayCoords[0] + shipSize + 1, arrayCoords[1] + 2];
+    }
+    for (let i = startCoord[0]; i < endCoord[0]; i++) {
+      for (let j = startCoord[1]; j < endCoord[1]; j++) {
+        //if (defaultPosition) {
+        let coords = this.fromArrayToCoords([i, j]);
+        if (!this.coordinates.has(coords)) {
+          this.coordinates.set(coords, "ship-area");
+        }
+        //}
+      }
     }
   }
   isPlaceAvailableForPlacing(shipSize, arrayCoords, defaultPosition = true) {

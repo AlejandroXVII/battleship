@@ -79,3 +79,27 @@ test("Check if isPlaceAvailableForAttack method works", () => {
   expect(gameBoard.isPlaceAvailableForAttack([3, 2])).toBe(false);
   expect(gameBoard.isPlaceAvailableForAttack([5, 5])).toBe(false);
 });
+
+test("Verify ship area", () => {
+  const ship1 = new Ship(4);
+  const ship2 = new Ship(4);
+  const ship3 = new Ship(4);
+  const ship4 = new Ship(6);
+  const gameBoard = new GameBoard();
+  gameBoard.placeShip(ship1, [2, 2], true);
+  gameBoard.placeShip(ship2, [5, 5], false);
+  gameBoard.placeShip(ship3, [0, 0], true);
+  gameBoard.placeShip(ship4, [2, 8], false);
+  gameBoard.placeShipArea(ship1.length, [2, 2], true);
+  gameBoard.placeShipArea(ship2.length, [5, 5], false);
+  gameBoard.placeShipArea(ship3.length, [0, 0], true);
+  gameBoard.placeShipArea(ship4.length, [2, 8], false);
+  gameBoard.showGameBoard();
+  console.log(gameBoard.placeShipArea(ship1.length, [2, 2], true));
+  expect(gameBoard.coordinates.get(gameBoard.fromArrayToCoords([2, 1]))).toBe(
+    "ship-area",
+  );
+  expect(gameBoard.coordinates.get(gameBoard.fromArrayToCoords([2, 6]))).toBe(
+    "ship-area",
+  );
+});

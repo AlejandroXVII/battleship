@@ -45,6 +45,18 @@ class Player {
       this.gameBoard.placeShip(this.ships[index], arrayCoords, orientation);
     }
   }
+  getRandomAttackCoordinate() {
+    let x = getRandomInt(0, this.enemyGameBoard.size);
+    let y = getRandomInt(0, this.enemyGameBoard.size);
+    if (((x % 2 === 0) & (y % 2 !== 0)) | ((x % 2 !== 0) & (y % 2 === 0))) {
+      if (randomBoolean()) {
+        y += 1;
+      } else {
+        y -= 1;
+      }
+    }
+    return [x, y];
+  }
   checkBestAttack(arrayCoords) {
     let nextBestAttack = [];
     //Compare that there are come attack one block close
@@ -254,10 +266,7 @@ class Player {
       if (this.futuresAttacks.length > 0) {
         arrayCoords = this.futuresAttacks.shift();
       } else {
-        arrayCoords = [
-          getRandomInt(0, this.enemyGameBoard.size),
-          getRandomInt(0, this.enemyGameBoard.size),
-        ];
+        arrayCoords = this.getRandomAttackCoordinate();
       }
     } while (!this.enemyGameBoard.isPlaceAvailableForAttack(arrayCoords));
     this.enemyGameBoard.receiveAttack(arrayCoords);
