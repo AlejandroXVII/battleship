@@ -112,6 +112,24 @@ main {
   #computer {
     cursor: not-allowed;
   }
+  .game-board {
+    display: grid;
+    #start-button {
+      border: 2px solid var(--background-color);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      margin: var(--margin) 0;
+      justify-self: end;
+      font-weight: bold;
+      color: var(--tertiary-color);
+      background-color: var(--principal-color);
+    }
+    #start-button:hover {
+      border: 2px solid var(--tertiary-color);
+      color: var(--background-color);
+      transition: all 0.5s ease-out;
+    }
+  }
   .game-board-container {
     height: 500px;
     width: 500px;
@@ -128,12 +146,14 @@ main {
     }
     .ship.show {
       background-color: rgb(1, 22, 40);
+      transition: all 0.5s ease-out;
     }
     .ship-area.show {
       background-color: rgb(255, 255, 255, 0.1);
     }
     .ship.attacked {
       background-color: rgba(180, 27, 27, 0.712);
+      transition: all 0.5s ease-out;
     }
     .preview {
       background-color: rgba(27, 180, 65, 0.349);
@@ -145,6 +165,7 @@ main {
       -moz-border-radius: 70px;
       -webkit-border-radius: 70px;
       border-radius: 70px;
+      transition: all 0.5s ease-out;
     }
     .attacked:hover {
       cursor: not-allowed;
@@ -204,7 +225,7 @@ dialog::backdrop {
   position: absolute;
 
   margin: var(--margin) 0;
-  bottom: -70px;
+  bottom: 5px;
   display: grid;
   grid-template-columns: repeat(3, auto);
   align-items: center;

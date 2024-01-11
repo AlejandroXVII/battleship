@@ -47,6 +47,8 @@ function loadGameBoard(player, computer, $playerContainer, $computerContainer) {
     }
   }
 
+  document.querySelector(".game-board").remove();
+  document.querySelector("#slider").style.display = "none";
   loadOneGameBoard(
     computer.enemyGameBoard,
     $computerContainer,
@@ -134,8 +136,14 @@ function loadEmptyGameBoard(player) {
       numShipsLeft -= 1;
     }
     if (numShipsLeft < 0) {
+      function dropEvents() {
+        let drops = document.querySelectorAll(".game-board-container button");
+        drops.forEach((drop) => {
+          drop.removeEventListener("click", placeShip);
+        });
+      }
+      dropEvents();
       console.log("finished");
-
       console.log(player.gameBoard.showGameBoard());
     }
   }
@@ -180,7 +188,7 @@ function loadEmptyGameBoard(player) {
     }
   }
   let numShipsLeft = 3;
-
+  document.querySelector("#slider").style.display = "grid";
   const $container = document.querySelector("#content");
   const $playerContainer = document.createElement("div");
   $playerContainer.classList.add("game-board-container");
@@ -198,6 +206,10 @@ function loadEmptyGameBoard(player) {
       $coordBox.addEventListener("mouseout", removePreviewShip);
     }
   }
+  const $startButton = document.createElement("button");
+  $startButton.textContent = "START";
+  $startButton.id = "start-button";
+  $gameBoardContainer.appendChild($startButton);
   const $slider = document.querySelector("#slider-input");
   $slider.addEventListener("click", changeDefaultPosition);
   $slider.checked = "true";
