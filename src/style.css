@@ -95,8 +95,11 @@ main {
   );
   display: grid;
   align-content: center;
-  justify-content: center;
   #content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 50px;
   }
   .game-board-container {
     height: 500px;
@@ -112,15 +115,29 @@ main {
       background-color: rgb(1, 22, 40, 0);
       border: 1px solid var(--principal-color);
     }
-    button:hover {
+    button:not(.attacked):hover {
       background-color: rgb(255, 255, 255, 0.25);
       cursor: crosshair;
     }
-    .ship {
+    .ship.show {
       background-color: rgb(1, 22, 40);
     }
-    .ship-area {
+    .ship-area.show {
       background-color: rgb(255, 255, 255, 0.1);
+    }
+    .ship.attacked {
+      background-color: rgba(180, 27, 27, 0.712);
+    }
+    button:not(.ship).attacked {
+      width: auto;
+      height: auto;
+      background: rgba(116, 15, 15, 0.445);
+      -moz-border-radius: 70px;
+      -webkit-border-radius: 70px;
+      border-radius: 70px;
+    }
+    .attacked:hover {
+      cursor: not-allowed;
     }
   }
 }

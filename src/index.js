@@ -20,8 +20,13 @@ while (
   player2.enemyGameBoard.showGameBoard();
 }
 */
-const player1 = new Player();
-player1.autoPlaceAllShips();
-
-const $container = document.querySelector(".game-board-container");
-loadGameBoard(player1.gameBoard, $container);
+const player = new Player();
+const computer = new Player();
+player.autoPlaceAllShips();
+computer.autoPlaceAllShips();
+player.addEnemyGameBoard(computer.gameBoard);
+computer.addEnemyGameBoard(player.gameBoard);
+const $playerContainer = document.querySelector("#player");
+const $computerContainer = document.querySelector("#computer");
+loadGameBoard(player.enemyGameBoard, $playerContainer, false);
+loadGameBoard(computer.enemyGameBoard, $computerContainer, true);

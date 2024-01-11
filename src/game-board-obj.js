@@ -40,7 +40,13 @@ class GameBoard {
     console.log("\n");
   }
   receiveAttack(arrayCoords) {
-    let coords = this.fromArrayToCoords([arrayCoords[0], arrayCoords[1]]);
+    let coords;
+    //if (typeof arrayCoords !== "string") {
+    coords = this.fromArrayToCoords([arrayCoords[0], arrayCoords[1]]);
+    //} else {
+    //  coords = arrayCoords;
+    //}
+
     if (
       this.coordinates.has(coords) &
       (this.coordinates.get(coords) !== "attacked-already") &
