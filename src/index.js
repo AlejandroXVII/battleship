@@ -1,14 +1,7 @@
 import "./style.css";
 import { Player } from "./player-obj";
+import { loadGameBoard } from "./load-game-board";
 /*
-const player = new Player();
-const player2 = new Player();
-player2.autoPlaceAllShips();
-player.addEnemyGameBoard(player2.gameBoard);
-while (!player.enemyGameBoard.isAllShipsSunk()) {
-  player.autoAttack();
-  player.enemyGameBoard.showGameBoard();
-}*/
 const player1 = new Player();
 const player2 = new Player();
 player1.autoPlaceAllShips();
@@ -26,3 +19,9 @@ while (
   player1.enemyGameBoard.showGameBoard();
   player2.enemyGameBoard.showGameBoard();
 }
+*/
+const player1 = new Player();
+player1.autoPlaceAllShips();
+
+const $container = document.querySelector(".game-board-container");
+loadGameBoard(player1.gameBoard, $container);
