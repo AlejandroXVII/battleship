@@ -282,6 +282,7 @@ class Player {
     if (this.enemyGameBoard.thisCoordinateHasBeenAttack(arrayCoords)) {
       this.futuresAttacks = this.checkBestAttack(arrayCoords);
     }
+    return arrayCoords;
   }
 }
 
