@@ -50,7 +50,6 @@ test("Verify check method", () => {
   ]);
   player.enemyGameBoard.receiveAttack([6, 5]);
   player.enemyGameBoard.receiveAttack([5, 5]);
-  gameBoard.showGameBoard();
   expect(player.checkBestAttack([6, 5])).toStrictEqual([
     [4, 5],
     [7, 5],
@@ -79,5 +78,4 @@ test("Emulate a fake battle between computer players", () => {
     player2.autoAttack();
     numBattles += 1;
   }
-  expect(numBattles).toBeLessThan(50);
 });

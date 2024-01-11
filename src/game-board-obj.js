@@ -41,11 +41,7 @@ class GameBoard {
   }
   receiveAttack(arrayCoords) {
     let coords;
-    //if (typeof arrayCoords !== "string") {
     coords = this.fromArrayToCoords([arrayCoords[0], arrayCoords[1]]);
-    //} else {
-    //  coords = arrayCoords;
-    //}
 
     if (
       this.coordinates.has(coords) &
@@ -129,11 +125,19 @@ class GameBoard {
     }
     if (
       (arrayCoords[0] + shipSize > this.size) |
-      ((arrayCoords[1] > this.size) & !defaultPosition) |
-      ((arrayCoords[0] > this.size) |
-        ((arrayCoords[1] + shipSize > this.size) & defaultPosition))
+      (arrayCoords[1] >= this.size)
     ) {
-      placeIsAvailable = false;
+      if (!defaultPosition) {
+        placeIsAvailable = false;
+      }
+    }
+    if (
+      (arrayCoords[0] >= this.size) |
+      (arrayCoords[1] + shipSize > this.size)
+    ) {
+      if (defaultPosition) {
+        placeIsAvailable = false;
+      }
     }
     return placeIsAvailable;
   }

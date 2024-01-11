@@ -21,7 +21,15 @@ test("Check if is allow to place a ship outside the game board", () => {
   gameBoard.placeShip(ship, [18, 2], false);
   gameBoard.placeShip(ship, [0, 18], true);
   gameBoard.placeShip(ship, [0, 18], false);
-  expect(gameBoard.ships.length).toBe(1);
+  gameBoard.placeShip(ship, [20, 2], false);
+  expect(gameBoard.isPlaceAvailableForPlacing(ship.length, [19, 2], true)).toBe(
+    true,
+  );
+  expect(
+    gameBoard.isPlaceAvailableForPlacing(ship.length, [20, 17], true),
+  ).toBe(false);
+  gameBoard.placeShip(ship, [20, 17], true);
+  expect(gameBoard.ships.length).toBe(2);
 });
 
 test("Check if receiveAttack hit ships and register missed hits ", () => {
@@ -54,15 +62,15 @@ test("Check if isAllTheShipsSunk method works", () => {
   const ship2 = new Ship(3);
   const gameBoard = new GameBoard();
   gameBoard.placeShip(ship1, [2, 2], true);
-  gameBoard.placeShip(ship2, [3, 2], true);
+  gameBoard.placeShip(ship2, [4, 2], true);
   expect(gameBoard.isAllShipsSunk()).toBe(false);
   gameBoard.receiveAttack([2, 2]);
   gameBoard.receiveAttack([2, 3]);
   gameBoard.receiveAttack([2, 4]);
   expect(gameBoard.isAllShipsSunk()).toBe(false);
-  gameBoard.receiveAttack([3, 2]);
-  gameBoard.receiveAttack([3, 3]);
-  gameBoard.receiveAttack([3, 4]);
+  gameBoard.receiveAttack([4, 2]);
+  gameBoard.receiveAttack([4, 3]);
+  gameBoard.receiveAttack([4, 4]);
   expect(gameBoard.isAllShipsSunk()).toBe(true);
 });
 
@@ -94,8 +102,6 @@ test("Verify ship area", () => {
   gameBoard.placeShipArea(ship2.length, [5, 5], false);
   gameBoard.placeShipArea(ship3.length, [0, 0], true);
   gameBoard.placeShipArea(ship4.length, [2, 8], false);
-  gameBoard.showGameBoard();
-  console.log(gameBoard.placeShipArea(ship1.length, [2, 2], true));
   expect(gameBoard.coordinates.get(gameBoard.fromArrayToCoords([2, 1]))).toBe(
     "ship-area",
   );
