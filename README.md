@@ -7,7 +7,7 @@
 - [Link to the Assignment](https://www.theodinproject.com/lessons/node-path-javascript-battleship)
 
 ## 📝 About
-Battelship game between the user and the computer using Test Driven Development. Developed as part of the **JavaScript Course** at [the Odin Project.](https://www.theodinproject.com/)
+Battleship game between the user and the computer using Test Driven Development. Developed as part of the **JavaScript Course** at [the Odin Project.](https://www.theodinproject.com/)
 
 ## 🛠️ Built With
 - HTML5 
